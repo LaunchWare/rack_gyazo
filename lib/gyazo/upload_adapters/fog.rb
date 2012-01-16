@@ -20,10 +20,14 @@ module Gyazo
       end
 
       def public_url
-        ["http://#{bucket}.s3.amazonaws.com", image.name].compact.join('/')
+        ["http://#{host}", image.name].compact.join('/')
       end
 
       protected
+      def host
+        configuration.cname.nil? ? "#{bucket}.s3.amazonaws.com" : configuration.cname
+      end
+
       def path
         "/"
       end

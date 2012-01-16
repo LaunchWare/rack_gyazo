@@ -8,6 +8,10 @@ module Rack
       def [](key)
         @configuration[key]
       end
+      
+      def cname
+        @configuration[:cname]
+      end
     end
   end
 end
