@@ -21,9 +21,11 @@ describe Gyazo::Image do
 
   describe "uploading" do
     it "delegates to the upload adapter" do
+      mock_adapter_class = mock
       mock_adapter = mock
       mock_adapter.expects(:upload).returns("http://www.example.com")
-      ::Gyazo::Image.adapter = mock_adapter
+      mock_adapter_class.expects(:new).returns(mock_adapter)
+      ::Gyazo::Image.adapter = mock_adapter_class
       subject.upload
     end
   end
@@ -31,7 +33,7 @@ describe Gyazo::Image do
   describe "upload adapters" do
     it "allows the client to specify a symbol as an adapter" do
       ::Gyazo::Image.adapter = :fog
-      ::Gyazo::Image.adapter.should be_kind_of(::Gyazo::UploadAdapters::Fog)
+      ::Gyazo::Image.adapter_class.should eql(::Gyazo::UploadAdapters::Fog)
     end
   end
 

@@ -6,12 +6,12 @@ module Rack
         if request.path == "/uploads" && request.post?
           if !image.nil?
             image.upload
-            [200, {'Content-Type' => 'text/plain'}, image.url]
+            [200, {'Content-Type' => 'text/plain'}, StringIO.new(image.url)]
           else
-            [422, {'Content-Type' => 'text/plain'}, 'imagedata not specified']
+            [422, {'Content-Type' => 'text/plain'}, StringIO.new('imagedata not specified')]
           end
         else
-          [404, {'Content-Type' => 'text/plain'}, 'file not found']
+          [404, {'Content-Type' => 'text/plain'}, StringIO.new('file not found')]
         end
       end
 
