@@ -1,9 +1,13 @@
 module Rack
   module Gyazo
-    class Application 
+    class Application
+      attr_reader :image, :request
+
       def call(env)
         @env = env
+        load_request
         if request.path == "/uploads" && request.post?
+          load_image
           if !image.nil?
             image.upload
             [200, {'Content-Type' => 'text/plain'}, StringIO.new(image.url)]
@@ -16,15 +20,13 @@ module Rack
       end
 
       protected
-      def request
-        @request ||= Rack::Request.new(@env)
+      def load_request
+        @request = Rack::Request.new(@env)
       end
 
-      def image
+      def load_image
         if request.params["imagedata"]
-          @image ||= ::Gyazo::Image.new(request.params["imagedata"])
-        else
-          nil
+          @image = ::Gyazo::Image.new(request.params["imagedata"])
         end
       end
     end
