@@ -1,5 +1,7 @@
 # RackGyazo
 
+[![Build Status](https://secure.travis-ci.org/EnlightSolutions/rack_gyazo.png)](http://travis-ci.org/enlightsolutions/rack_gyazo)
+
 This rack application is the server side implementation of the excellent gyazo.com application for taking quick screen shots
 
 ## Installation
